@@ -1,0 +1,17 @@
+{
+  "users": [],
+  "chatHistory": [],
+  "schemeHistory": [],
+  "complaints": [
+    {
+      "id": "SB-BAA670C4",
+      "name": "Rahul Sharma",
+      "location": "Pune, Maharashtra",
+      "description": "There is no street light on our road for 2 months",
+      "formalComplaint": "Subject: Non-Functional Street Lighting in Pune, Maharashtra\n\nDear Sir/Madam,\n\nI am writing to bring to your attention the absence of street lighting on our road in Pune, Maharashtra, for the past two months. The lack of illumination has caused inconvenience and safety concerns for residents, particularly during nighttime. I kindly request that you take immediate action to repair or install functional street lights on our road.\n\nThank you for your attention to this issue.\n\nSincerely,\n[Your Name]",
+      "status": "Submitted",
+      "lang": "en",
+      "createdAt": "2026-07-07T06:10:10.845Z"
+    }
+  ]
+}
