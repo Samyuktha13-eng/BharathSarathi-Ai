@@ -42,15 +42,15 @@ export default function Login() {
 
         <form onSubmit={submit}>
           <div className="form-group">
-            <label>Email</label>
-            <input className="input" type="email" placeholder="you@example.com" value={form.email} onChange={set('email')} required />
+            <label htmlFor="login-email">Email</label>
+            <input id="login-email" className="input" type="email" placeholder="you@example.com" value={form.email} onChange={set('email')} required aria-label="Email address" />
           </div>
           <div className="form-group">
-            <label>Password</label>
-            <input className="input" type="password" placeholder="••••••••" value={form.password} onChange={set('password')} required />
+            <label htmlFor="login-password">Password</label>
+            <input id="login-password" className="input" type="password" placeholder="••••••••" value={form.password} onChange={set('password')} required aria-label="Password" />
           </div>
           {error && <div className="error">{error}</div>}
-          <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', justifyContent: 'center', marginTop: 8 }}>
+          <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', justifyContent: 'center', marginTop: 8 }} aria-label="Sign in to your account">
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>

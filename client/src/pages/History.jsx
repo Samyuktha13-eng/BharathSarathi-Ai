@@ -53,7 +53,8 @@ export default function History() {
 
       {/* Search */}
       <div style={{ marginBottom: 20 }}>
-        <input className="input" placeholder="🔍 Search history..." value={search} onChange={(e) => setSearch(e.target.value)} />
+        <label htmlFor="history-search" className="sr-only">Search history</label>
+        <input id="history-search" className="input" placeholder="🔍 Search history..." value={search} onChange={(e) => setSearch(e.target.value)} aria-label="Search history" />
       </div>
 
       {/* Tabs */}
@@ -72,7 +73,7 @@ export default function History() {
         <div>
           {chatList.length > 0 && (
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 12 }}>
-              <button className="btn btn-ghost" style={{ fontSize: '0.82rem', color: 'var(--red)' }} onClick={() => clearAll('chat')}>
+              <button className="btn btn-ghost" style={{ fontSize: '0.82rem', color: 'var(--red)' }} onClick={() => clearAll('chat')} aria-label="Clear all chat history">
                 <MdDeleteSweep size={16} /> Clear All
               </button>
             </div>
@@ -83,7 +84,7 @@ export default function History() {
                 <span className="badge badge-blue">{LANG_LABELS[item.lang] || item.lang}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ color: 'var(--gray-500)', fontSize: '0.8rem' }}>{formatDate(item.createdAt)}</span>
-                  <button onClick={() => deleteItem('chat', item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }}><MdDeleteOutline size={18} /></button>
+                  <button onClick={() => deleteItem('chat', item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }} aria-label="Delete this chat"><MdDeleteOutline size={18} /></button>
                 </div>
               </div>
               <div style={{ fontWeight: 600, marginBottom: 6, fontSize: '0.93rem' }}>Q: {item.question}</div>
@@ -100,7 +101,7 @@ export default function History() {
         <div>
           {schemeList.length > 0 && (
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 12 }}>
-              <button className="btn btn-ghost" style={{ fontSize: '0.82rem', color: 'var(--red)' }} onClick={() => clearAll('scheme')}>
+              <button className="btn btn-ghost" style={{ fontSize: '0.82rem', color: 'var(--red)' }} onClick={() => clearAll('scheme')} aria-label="Clear all scheme history">
                 <MdDeleteSweep size={16} /> Clear All
               </button>
             </div>
@@ -114,7 +115,7 @@ export default function History() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ color: 'var(--gray-500)', fontSize: '0.8rem' }}>{formatDate(item.createdAt)}</span>
-                  <button onClick={() => deleteItem('scheme', item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }}><MdDeleteOutline size={18} /></button>
+                  <button onClick={() => deleteItem('scheme', item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }} aria-label="Delete this scheme search"><MdDeleteOutline size={18} /></button>
                 </div>
               </div>
               <div style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: 8 }}>
@@ -133,7 +134,7 @@ export default function History() {
         <div>
           {complaintList.length > 0 && (
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 12 }}>
-              <button className="btn btn-ghost" style={{ fontSize: '0.82rem', color: 'var(--red)' }} onClick={() => clearAll('complaint')}>
+              <button className="btn btn-ghost" style={{ fontSize: '0.82rem', color: 'var(--red)' }} onClick={() => clearAll('complaint')} aria-label="Clear all complaint history">
                 <MdDeleteSweep size={16} /> Clear All
               </button>
             </div>
@@ -147,7 +148,7 @@ export default function History() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ color: 'var(--gray-500)', fontSize: '0.8rem' }}>{formatDate(item.createdAt)}</span>
-                  <button onClick={() => deleteItem('complaint', item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }}><MdDeleteOutline size={18} /></button>
+                  <button onClick={() => deleteItem('complaint', item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }} aria-label="Delete this complaint"><MdDeleteOutline size={18} /></button>
                 </div>
               </div>
               <div style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: 8 }}>📍 {item.location} · 👤 {item.name}</div>

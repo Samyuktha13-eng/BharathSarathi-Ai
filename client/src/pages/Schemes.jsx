@@ -47,27 +47,27 @@ export default function Schemes() {
           <LangSelector value={lang} onChange={setLang} />
           <div className="grid-2">
             <div className="form-group">
-              <label>Age</label>
-              <input className="input" type="number" placeholder="e.g. 28" value={form.age} onChange={set('age')} required />
+              <label htmlFor="scheme-age">Age</label>
+              <input id="scheme-age" className="input" type="number" placeholder="e.g. 28" value={form.age} onChange={set('age')} required aria-label="Your age" />
             </div>
             <div className="form-group">
-              <label>Annual Income</label>
-              <input className="input" type="text" placeholder="e.g. 2.5 LPA" value={form.income} onChange={set('income')} required />
+              <label htmlFor="scheme-income">Annual Income</label>
+              <input id="scheme-income" className="input" type="text" placeholder="e.g. 2.5 LPA" value={form.income} onChange={set('income')} required aria-label="Annual income" />
             </div>
             <div className="form-group">
-              <label>Occupation</label>
-              <input className="input" type="text" placeholder="e.g. Farmer, Student" value={form.occupation} onChange={set('occupation')} required />
+              <label htmlFor="scheme-occupation">Occupation</label>
+              <input id="scheme-occupation" className="input" type="text" placeholder="e.g. Farmer, Student" value={form.occupation} onChange={set('occupation')} required aria-label="Occupation" />
             </div>
             <div className="form-group">
-              <label>State</label>
-              <select value={form.state} onChange={set('state')} required>
+              <label htmlFor="scheme-state">State</label>
+              <select id="scheme-state" value={form.state} onChange={set('state')} required aria-label="Select your state">
                 <option value="">Select State</option>
                 {STATES.map((s) => <option key={s}>{s}</option>)}
               </select>
             </div>
             <div className="form-group">
-              <label>Gender</label>
-              <select value={form.gender} onChange={set('gender')}>
+              <label htmlFor="scheme-gender">Gender</label>
+              <select id="scheme-gender" value={form.gender} onChange={set('gender')} aria-label="Select gender">
                 <option value="">Prefer not to say</option>
                 <option>Male</option>
                 <option>Female</option>
@@ -75,7 +75,7 @@ export default function Schemes() {
               </select>
             </div>
           </div>
-          <button className="btn btn-primary" type="submit" disabled={loading}>
+          <button className="btn btn-primary" type="submit" disabled={loading} aria-label="Find government schemes">
             {loading ? 'Finding Schemes...' : '🔍 Find My Schemes'}
           </button>
         </form>

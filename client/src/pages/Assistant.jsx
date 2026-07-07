@@ -50,8 +50,8 @@ export default function Assistant() {
       <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
         <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--gray-200)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--green)' }} />
-            <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Sahayak is online</span>
+            <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--green)' }} role="status" aria-label="Sarthi is online" />
+            <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Sarthi is online</span>
           </div>
           <div style={{ width: 200 }}>
             <LangSelector value={lang} onChange={setLang} />
@@ -60,8 +60,8 @@ export default function Assistant() {
 
         <div className="chat-window">
           {messages.map((m, i) => (
-            <div key={i} className={`chat-bubble ${m.role}`}>
-              <div className={`bubble-avatar ${m.role}`}>{m.role === 'ai' ? '🤖' : '👤'}</div>
+            <div key={i} className={`chat-bubble ${m.role}`} role="article" aria-label={m.role === 'ai' ? 'Sarthi response' : 'Your message'}>
+              <div className={`bubble-avatar ${m.role}`} aria-hidden="true">{m.role === 'ai' ? '🤖' : '👤'}</div>
               <div className="bubble-text">{m.text}</div>
             </div>
           ))}
@@ -79,17 +79,19 @@ export default function Assistant() {
         <form onSubmit={ask} style={{ padding: '12px 16px', borderTop: '1px solid var(--gray-200)', display: 'flex', gap: 8 }}>
           <div style={{ flex: 1, position: 'relative' }}>
             <input
+              id="chat-input"
               className="input"
               placeholder="Type your question or press 🎤 to speak..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               style={{ paddingRight: 44 }}
+              aria-label="Type your question"
             />
-            <button type="button" onClick={toggle} className={`mic-btn ${listening ? 'active' : 'idle'}`}>
+            <button type="button" onClick={toggle} className={`mic-btn ${listening ? 'active' : 'idle'}`} aria-label={listening ? 'Stop listening' : 'Start voice input'}>
               {listening ? <BsStopFill size={14} /> : <BsMicFill size={14} />}
             </button>
           </div>
-          <button className="btn btn-primary" type="submit" disabled={loading || !input.trim()} style={{ padding: '10px 16px' }}>
+          <button className="btn btn-primary" type="submit" disabled={loading || !input.trim()} style={{ padding: '10px 16px' }} aria-label="Send message">
             <IoSend size={16} />
           </button>
         </form>

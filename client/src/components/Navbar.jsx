@@ -23,9 +23,9 @@ export default function Navbar() {
   const handleLogout = () => { logout(); navigate('/login') }
 
   return (
-    <nav className="navbar">
-      <div className="navbar-brand">
-        <span className="flag">🇮🇳</span>
+    <nav className="navbar" role="navigation" aria-label="Main navigation">
+      <div className="navbar-brand" role="banner">
+        <span className="flag" aria-hidden="true">🇮🇳</span>
         <span className="brand-name">BharatSarthiAI</span>
       </div>
 
@@ -43,7 +43,7 @@ export default function Navbar() {
         {user ? (
           <>
             <span className="user-name">👤 {user.name.split(' ')[0]}</span>
-            <button className="btn-logout" onClick={handleLogout}>Logout</button>
+            <button className="btn-logout" onClick={handleLogout} aria-label="Logout">Logout</button>
           </>
         ) : (
           <button className="btn-logout" onClick={() => navigate('/login')}>Sign In</button>

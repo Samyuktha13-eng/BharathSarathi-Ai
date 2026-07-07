@@ -62,30 +62,32 @@ export default function Complaint() {
             <LangSelector value={lang} onChange={setLang} />
             <div className="grid-2">
               <div className="form-group">
-                <label>Your Name (optional)</label>
-                <input className="input" type="text" placeholder="e.g. Rahul Sharma" value={form.name} onChange={set('name')} />
+                <label htmlFor="complaint-name">Your Name (optional)</label>
+                <input id="complaint-name" className="input" type="text" placeholder="e.g. Rahul Sharma" value={form.name} onChange={set('name')} />
               </div>
               <div className="form-group">
-                <label>Location *</label>
-                <input className="input" type="text" placeholder="e.g. Pune, Maharashtra" value={form.location} onChange={set('location')} required />
+                <label htmlFor="complaint-location">Location *</label>
+                <input id="complaint-location" className="input" type="text" placeholder="e.g. Pune, Maharashtra" value={form.location} onChange={set('location')} required />
               </div>
             </div>
             <div className="form-group">
-              <label>Describe Your Issue *</label>
+              <label htmlFor="complaint-desc">Describe Your Issue *</label>
               <div style={{ position: 'relative' }}>
                 <textarea
+                  id="complaint-desc"
                   className="input" rows={4} required
                   placeholder="e.g. There is no street light on our road for 2 months..."
                   value={form.description} onChange={set('description')}
                   style={{ paddingRight: 48 }}
+                  aria-label="Describe your issue"
                 />
-                <button type="button" onClick={toggle} className={`mic-btn ${listening ? 'active' : 'idle'}`}>
+                <button type="button" onClick={toggle} className={`mic-btn ${listening ? 'active' : 'idle'}`} aria-label={listening ? 'Stop voice input' : 'Start voice input'}>
                   {listening ? <BsStopFill size={14} /> : <BsMicFill size={14} />}
                 </button>
               </div>
               {listening && <p style={{ color: 'var(--red)', fontSize: '0.8rem', marginTop: 4 }}>🔴 Listening... speak now</p>}
             </div>
-            <button className="btn btn-primary" type="submit" disabled={loading}>
+            <button className="btn btn-primary" type="submit" disabled={loading} aria-label="Submit complaint">
               {loading ? 'Generating...' : '📝 Submit Complaint'}
             </button>
           </form>

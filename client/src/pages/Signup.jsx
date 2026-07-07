@@ -60,23 +60,23 @@ export default function Signup() {
 
         <form onSubmit={submit}>
           <div className="form-group">
-            <label>Full Name</label>
-            <input className="input" type="text" placeholder="e.g. Priya Sharma" value={form.name} onChange={set('name')} required />
-            {errors.name && <span className="field-error">{errors.name}</span>}
+            <label htmlFor="signup-name">Full Name</label>
+            <input id="signup-name" className="input" type="text" placeholder="e.g. Priya Sharma" value={form.name} onChange={set('name')} required aria-label="Full name" />
+            {errors.name && <span className="field-error" role="alert">{errors.name}</span>}
           </div>
           <div className="form-group">
-            <label>Email</label>
-            <input className="input" type="email" placeholder="you@example.com" value={form.email} onChange={set('email')} required />
-            {errors.email && <span className="field-error">{errors.email}</span>}
+            <label htmlFor="signup-email">Email</label>
+            <input id="signup-email" className="input" type="email" placeholder="you@example.com" value={form.email} onChange={set('email')} required aria-label="Email address" />
+            {errors.email && <span className="field-error" role="alert">{errors.email}</span>}
           </div>
           <div className="form-group">
-            <label>Password</label>
-            <input className="input" type="password" placeholder="Min 8 chars, uppercase, number, symbol" value={form.password} onChange={set('password')} required />
-            {errors.password && <span className="field-error">{errors.password}</span>}
+            <label htmlFor="signup-password">Password</label>
+            <input id="signup-password" className="input" type="password" placeholder="Min 8 chars, uppercase, number, symbol" value={form.password} onChange={set('password')} required aria-label="Password" />
+            {errors.password && <span className="field-error" role="alert">{errors.password}</span>}
           </div>
           <div className="form-group">
-            <label>Preferred Language</label>
-            <select value={form.lang} onChange={set('lang')}>
+            <label htmlFor="signup-lang">Preferred Language</label>
+            <select id="signup-lang" value={form.lang} onChange={set('lang')} aria-label="Preferred language">
               <option value="en">🇬🇧 English</option>
               <option value="hi">🇮🇳 Hindi</option>
               <option value="ta">🌿 Tamil</option>
@@ -88,7 +88,7 @@ export default function Signup() {
             </select>
           </div>
           {apiError && <div className="error">{apiError}</div>}
-          <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', justifyContent: 'center', marginTop: 8 }}>
+          <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', justifyContent: 'center', marginTop: 8 }} aria-label="Create your account">
             {loading ? 'Creating account...' : 'Create Account'}
           </button>
         </form>

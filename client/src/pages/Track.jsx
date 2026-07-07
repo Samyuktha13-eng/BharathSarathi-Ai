@@ -37,12 +37,15 @@ export default function Track() {
 
       <div className="card">
         <form onSubmit={track} style={{ display: 'flex', gap: 10 }}>
+          <label htmlFor="track-id" className="sr-only">Complaint ID</label>
           <input
+            id="track-id"
             className="input" placeholder="e.g. SB-BAA670C4"
             value={id} onChange={(e) => setId(e.target.value)}
             required style={{ flex: 1 }}
+            aria-label="Enter complaint ID"
           />
-          <button className="btn btn-primary" type="submit" disabled={loading || !id.trim()}>
+          <button className="btn btn-primary" type="submit" disabled={loading || !id.trim()} aria-label="Track complaint status">
             {loading ? '...' : 'Track'}
           </button>
         </form>

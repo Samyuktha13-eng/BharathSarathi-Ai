@@ -12,10 +12,17 @@ export default async function handler(req, res) {
   if (!age || !income || !occupation || !state)
     return res.status(400).json({ error: "age, income, occupation, state are required" });
 
-  const schemes = await askAI(schemePrompt({ age, income, occupation, state, gender, lang }));
+  const ageNum = Number(age);
+  if (isNaN(ageNum) || ageNum < 1 || ageNum > 120)
+    return res.status(400).json({ error: "Invalid age value" });
 
-  await connectDB();
-  await Scheme.create({ id: generateComplaintId(), age, income, occupation, state, gender: gender || "Not specified", lang, schemes, createdAt: currentTimestamp() });
-
-  res.json({ schemes });
+  try {
+    const schemes = await askAI(schemePrompt({ age, income, occupation, state, gender, lang }));
+    await connectDB();
+    await Scheme.create({ id: generateComplaintId(), age, income, occupation, state, gender: gender || "Not specified", lang, schemes, createdAt: currentTimestamp() });
+    res.json({ schemes });
+  } catch (err) {
+    console.error("Schemes error:", err.message);
+    res.status(500).json({ error: "Failed to find schemes. Please try again." });
+  }
 }

@@ -1,7 +1,6 @@
 import { connectDB } from "../lib/mongoose.js";
 import { User } from "../lib/models.js";
-import { currentTimestamp } from "../lib/utils.js";
-import { v4 as uuidv4 } from "uuid";
+import { currentTimestamp, generateComplaintId } from "../lib/utils.js";
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
@@ -28,7 +27,7 @@ export default async function handler(req, res) {
       return res.status(409).json({ error: "Email already registered." });
 
     const user = await User.create({
-      id: uuidv4(), name, email, password, lang,
+      id: generateComplaintId(), name, email, password, lang,
       createdAt: currentTimestamp(),
     });
 
