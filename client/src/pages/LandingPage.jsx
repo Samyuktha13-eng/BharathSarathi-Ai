@@ -62,7 +62,7 @@ export default function LandingPage() {
       <section style={styles.hero}>
         <div style={styles.heroInner}>
           <div style={{ fontSize: '3.5rem', marginBottom: 12, animation: 'sparkFloat 3s ease-in-out infinite' }}>🇮🇳</div>
-          <h1 style={styles.heroTitle}>Smart Bharat</h1>
+          <h1 style={styles.heroTitle}>BharatSarthi AI</h1>
           <p style={styles.heroSub}>AI-Powered Civic Companion</p>
           <p style={styles.heroDesc}>
             Empowering citizens with intelligent access to government services through Artificial Intelligence.
@@ -88,10 +88,10 @@ export default function LandingPage() {
 
         {/* ── About ── */}
         <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>What is Smart Bharat?</h2>
+          <h2 style={styles.sectionTitle}>What is BharatSarthi AI?</h2>
           <div className="card" style={{ background: 'linear-gradient(135deg, #eff6ff, #f5f3ff)', border: '1.5px solid rgba(37,99,235,0.15)', textAlign: 'center', padding: '32px 28px' }}>
             <p style={{ fontSize: '1.08rem', lineHeight: 1.8, color: '#334155', maxWidth: 680, margin: '0 auto' }}>
-              Smart Bharat is an <strong>AI-powered civic platform</strong> designed to simplify how citizens interact with government services.
+              BharatSarthi AI is an <strong>AI-powered civic platform</strong> designed to simplify how citizens interact with government services.
               It helps users understand schemes, report public issues, receive multilingual assistance, and track complaints
               through an intelligent AI companion.
             </p>
@@ -170,7 +170,7 @@ export default function LandingPage() {
         <section style={{ ...styles.section, marginBottom: 0 }}>
           <div className="hero-section" style={{ marginBottom: 0 }}>
             <h2 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: 10 }}>🚀 Ready to Get Started?</h2>
-            <p style={{ color: '#64748b', marginBottom: 24 }}>Join Smart Bharat and experience AI-powered civic assistance.</p>
+            <p style={{ color: '#64748b', marginBottom: 24 }}>Join BharatSarthi AI and experience AI-powered civic assistance.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <button className="btn btn-primary" style={{ fontSize: '1rem', padding: '13px 32px' }} onClick={() => navigate('/login')}>
                 Login
@@ -189,7 +189,7 @@ export default function LandingPage() {
               <span key={l} style={{ cursor: 'pointer', color: '#2563eb', fontWeight: 500 }}>{l}</span>
             ))}
           </div>
-          <p>© 2025 Smart Bharat · BharatSarthiAI · Powered by LangChain + Groq</p>
+          <p>© 2025 BharatSarthi AI · Powered by LangChain + Groq</p>
         </footer>
 
       </div>
