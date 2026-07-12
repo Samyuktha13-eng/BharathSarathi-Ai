@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { BsEye, BsEyeSlash } from 'react-icons/bs'
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const passwordRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/
@@ -11,6 +12,7 @@ export default function Signup() {
   const [errors, setErrors] = useState({})
   const [apiError, setApiError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPwd, setShowPwd] = useState(false)
   const { login, user } = useAuth()
   const navigate = useNavigate()
 
@@ -73,7 +75,12 @@ export default function Signup() {
           </div>
           <div className="form-group">
             <label htmlFor="signup-password">Password</label>
-            <input id="signup-password" className="input" type="password" placeholder="Min 8 chars, uppercase, number, symbol" value={form.password} onChange={set('password')} required aria-label="Password" />
+            <div style={{ position: 'relative' }}>
+              <input id="signup-password" className="input" type={showPwd ? 'text' : 'password'} placeholder="Min 8 chars, uppercase, number, symbol" value={form.password} onChange={set('password')} required aria-label="Password" style={{ paddingRight: 40 }} />
+              <button type="button" onClick={() => setShowPwd(v => !v)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--gray-500)', display: 'flex' }} aria-label={showPwd ? 'Hide password' : 'Show password'}>
+                {showPwd ? <BsEyeSlash size={18} /> : <BsEye size={18} />}
+              </button>
+            </div>
             {errors.password && <span className="field-error" role="alert">{errors.password}</span>}
           </div>
           <div className="form-group">

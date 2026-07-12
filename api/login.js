@@ -14,7 +14,19 @@ export default async function handler(req, res) {
     await connectDB();
     const user = await User.findOne({ email: email.toLowerCase().trim() });
     if (!user) return res.status(401).json({ error: "Invalid email or password." });
-    const match = await bcrypt.compare(password, user.password);
+
+    // Support both bcrypt hashed and legacy plain text passwords
+    const isHashed = user.password.startsWith('$2');
+    const match = isHashed
+      ? await bcrypt.compare(password, user.password)
+      : user.password === password;
+
+    // If plain text matched, upgrade to bcrypt silently
+    if (!isHashed && match) {
+      user.password = await bcrypt.hash(password, 10);
+      await user.save();
+    }
+
     if (!match) return res.status(401).json({ error: "Invalid email or password." });
     res.json({ user: { id: user.id, name: user.name, email: user.email, lang: user.lang } });
   } catch (err) {
