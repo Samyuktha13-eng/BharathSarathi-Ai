@@ -6,8 +6,12 @@ export default async function handler(req, res) {
 
   // CSRF protection — only allow requests from same origin
   const origin = req.headers['origin'] || req.headers['referer'] || '';
-  const allowedOrigins = [process.env.VERCEL_URL, 'http://localhost:5173', 'https://smart-bharat-livid.vercel.app'];
-  if (req.method === 'DELETE' && !allowedOrigins.some((o) => o && origin.startsWith(o))) {
+  const allowedOrigins = [
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
+    'http://localhost:5173',
+    'https://smart-bharat-livid.vercel.app',
+  ];
+  if (req.method === 'DELETE' && origin && !allowedOrigins.some((o) => o && origin.startsWith(o))) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
