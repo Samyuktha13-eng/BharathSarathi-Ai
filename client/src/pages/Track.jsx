@@ -3,9 +3,12 @@ import Spinner from '../components/Spinner'
 import { formatDate } from '../utils'
 import { TbMapSearch } from 'react-icons/tb'
 
+import { useAuth } from '../context/AuthContext'
+
 const STEPS = ['Submitted', 'In Review', 'Resolved']
 
 export default function Track() {
+  const { user } = useAuth()
   const [id, setId] = useState('')
   const [complaint, setComplaint] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -15,7 +18,7 @@ export default function Track() {
     e.preventDefault()
     setLoading(true); setError(''); setComplaint(null)
     try {
-      const res = await fetch(`/api/track?id=${id.trim()}`)
+      const res = await fetch(`/api/track?id=${id.trim()}&userId=${user?.id}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       setComplaint(data)
