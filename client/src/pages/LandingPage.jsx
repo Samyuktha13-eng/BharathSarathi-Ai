@@ -20,15 +20,6 @@ const features = [
   },
 ]
 
-const stack = [
-  { label: 'Frontend', value: 'React + Vite' },
-  { label: 'Backend', value: 'Vercel Serverless' },
-  { label: 'AI', value: 'LangChain' },
-  { label: 'LLM', value: 'Groq / Llama 3' },
-  { label: 'Deployment', value: 'Vercel' },
-  { label: 'Database', value: 'MongoDB' },
-]
-
 const stats = [
   { icon: '🌐', label: '8 Languages Supported' },
   { icon: '🤖', label: 'AI-Powered Assistance' },
@@ -52,14 +43,6 @@ const demoMessages = [
   { role: 'ai', text: 'Upload your identity proof, address proof, and visit the Passport Seva portal at passportindia.gov.in to book an appointment.' },
   { role: 'user', text: 'Recommend schemes for farmers.' },
   { role: 'ai', text: 'Based on your profile, you may be eligible for PM-KISAN (₹6000/year), Pradhan Mantri Fasal Bima Yojana, and Kisan Credit Card scheme.' },
-]
-
-const steps = [
-  { icon: '👤', label: 'Citizen' },
-  { icon: '🔍', label: 'Choose a Service' },
-  { icon: '🤖', label: 'AI Processes Request' },
-  { icon: '📋', label: 'Smart Recommendation' },
-  { icon: '📍', label: 'Track Progress' },
 ]
 
 export default function LandingPage() {
@@ -154,37 +137,6 @@ export default function LandingPage() {
                 </div>
               )}
             </div>
-          </div>
-        </section>
-
-        {/* ── How It Works ── */}
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>📈 How It Works</h2>
-          <div className="card">
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 8 }}>
-              {steps.map((s, i) => (
-                <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '1.8rem', marginBottom: 4 }}>{s.icon}</div>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 600, color: '#64748b', maxWidth: 80, textAlign: 'center' }}>{s.label}</div>
-                  </div>
-                  {i < steps.length - 1 && <span style={{ color: '#2563eb', fontWeight: 700, fontSize: '1.2rem', marginBottom: 20 }}>→</span>}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Tech Stack ── */}
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>🛠 Technology Stack</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-            {stack.map((s) => (
-              <div key={s.label} className="card" style={{ textAlign: 'center', padding: '18px 12px', marginBottom: 0, background: '#f8fafc' }}>
-                <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{s.label}</div>
-                <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1e3a8a' }}>{s.value}</div>
-              </div>
-            ))}
           </div>
         </section>
 
