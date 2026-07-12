@@ -11,7 +11,10 @@ export function useVoice(onResult, lang = 'en') {
 
   const toggle = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition
-    if (!SR) return alert('Voice input not supported in this browser. Try Chrome.')
+    if (!SR) {
+      setListening(false)
+      return
+    }
 
     if (listening) {
       recRef.current?.stop()

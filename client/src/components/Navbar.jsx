@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext'
 import './Navbar.css'
 
 const links = [
-  { to: '/', label: 'Home', icon: <AiOutlineHome size={16} />, end: true },
+  { to: '/dashboard', label: 'Home', icon: <AiOutlineHome size={16} />, end: true },
   { to: '/assistant', label: 'Assistant', icon: <IoChatbubblesOutline size={16} /> },
   { to: '/schemes', label: 'Schemes', icon: <HiOutlineDocumentText size={16} /> },
   { to: '/complaint', label: 'Complaint', icon: <MdOutlineReportProblem size={16} /> },

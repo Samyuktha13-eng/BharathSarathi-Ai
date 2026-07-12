@@ -1,6 +1,7 @@
 import { connectDB } from "../lib/mongoose.js";
 import { User } from "../lib/models.js";
 import { currentTimestamp, generateComplaintId } from "../lib/utils.js";
+import bcrypt from "bcryptjs";
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
@@ -26,8 +27,9 @@ export default async function handler(req, res) {
     if (existing)
       return res.status(409).json({ error: "Email already registered." });
 
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
-      id: generateComplaintId(), name, email: email.toLowerCase().trim(), password, lang,
+      id: generateComplaintId(), name, email: email.toLowerCase().trim(), password: hashedPassword, lang,
       createdAt: currentTimestamp(),
     });
 

@@ -4,6 +4,13 @@ import { Chat, Scheme, Complaint } from "../lib/models.js";
 export default async function handler(req, res) {
   await connectDB();
 
+  // CSRF protection — only allow requests from same origin
+  const origin = req.headers['origin'] || req.headers['referer'] || '';
+  const allowedOrigins = [process.env.VERCEL_URL, 'http://localhost:5173', 'https://smart-bharat-livid.vercel.app'];
+  if (req.method === 'DELETE' && !allowedOrigins.some((o) => o && origin.startsWith(o))) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
   const userId = req.query.userId || req.body?.userId;
   if (!userId) return res.status(400).json({ error: "userId is required" });
 

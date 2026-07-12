@@ -1,5 +1,6 @@
 import { connectDB } from "../lib/mongoose.js";
 import { User } from "../lib/models.js";
+import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
   if (req.method !== "POST")
@@ -12,8 +13,9 @@ export default async function handler(req, res) {
   try {
     await connectDB();
     const user = await User.findOne({ email: email.toLowerCase().trim() });
-    if (!user || user.password !== password)
-      return res.status(401).json({ error: "Invalid email or password." });
+    if (!user) return res.status(401).json({ error: "Invalid email or password." });
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(401).json({ error: "Invalid email or password." });
     res.json({ user: { id: user.id, name: user.name, email: user.email, lang: user.lang } });
   } catch (err) {
     console.error("Login error:", err.message);

@@ -41,7 +41,7 @@ export default function Signup() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       login(data.user)
-      navigate('/')
+      navigate('/dashboard')
     } catch (err) {
       setApiError(err.message)
     } finally {
