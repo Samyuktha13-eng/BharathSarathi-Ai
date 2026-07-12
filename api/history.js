@@ -6,17 +6,6 @@ export const config = { api: { bodyParser: true } };
 export default async function handler(req, res) {
   await connectDB();
 
-  // CSRF protection — only allow requests from same origin
-  const origin = req.headers['origin'] || req.headers['referer'] || '';
-  const allowedOrigins = [
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
-    'http://localhost:5173',
-    'https://smart-bharat-livid.vercel.app',
-  ];
-  if (req.method === 'DELETE' && origin && !allowedOrigins.some((o) => o && origin.startsWith(o))) {
-    return res.status(403).json({ error: 'Forbidden' });
-  }
-
   const userId = req.query.userId || req.body?.userId;
   if (!userId) return res.status(400).json({ error: "userId is required" });
 
@@ -35,10 +24,12 @@ export default async function handler(req, res) {
   if (req.method === "DELETE") {
     const { type, id } = req.body || {};
     if (id) {
-      if (type === "chat") await Chat.deleteOne({ id, userId });
-      if (type === "scheme") await Scheme.deleteOne({ id, userId });
-      if (type === "complaint") await Complaint.deleteOne({ id, userId });
+      // Delete single item by _id (MongoDB ObjectId)
+      if (type === "chat") await Chat.deleteOne({ _id: id });
+      if (type === "scheme") await Scheme.deleteOne({ _id: id });
+      if (type === "complaint") await Complaint.deleteOne({ _id: id });
     } else {
+      // Clear all — delete everything for this userId
       if (type === "chat" || type === "all") await Chat.deleteMany({ userId });
       if (type === "scheme" || type === "all") await Scheme.deleteMany({ userId });
       if (type === "complaint" || type === "all") await Complaint.deleteMany({ userId });

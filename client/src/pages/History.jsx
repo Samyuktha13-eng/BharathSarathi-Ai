@@ -32,7 +32,10 @@ export default function History() {
 
   const clearAll = async (type) => {
     if (!confirm(`Clear all ${type} history?`)) return
-    await fetch('/api/history', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, userId: user?.id }) })
+    const list = type === 'chat' ? data.chatHistory : type === 'scheme' ? data.schemeHistory : data.complaints
+    await Promise.all(list.map((item) =>
+      fetch('/api/history', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, id: item._id, userId: user?.id }) })
+    ))
     load()
   }
 
@@ -87,7 +90,7 @@ export default function History() {
                 <span className="badge badge-blue">{LANG_LABELS[item.lang] || item.lang}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ color: 'var(--gray-500)', fontSize: '0.8rem' }}>{formatDate(item.createdAt)}</span>
-                  <button onClick={() => deleteItem('chat', item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }} aria-label="Delete this chat"><MdDeleteOutline size={18} /></button>
+                  <button onClick={() => deleteItem('chat', item._id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }} aria-label="Delete this chat"><MdDeleteOutline size={18} /></button>
                 </div>
               </div>
               <div style={{ fontWeight: 600, marginBottom: 6, fontSize: '0.93rem' }}>Q: {item.question}</div>
@@ -118,7 +121,7 @@ export default function History() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ color: 'var(--gray-500)', fontSize: '0.8rem' }}>{formatDate(item.createdAt)}</span>
-                  <button onClick={() => deleteItem('scheme', item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }} aria-label="Delete this scheme search"><MdDeleteOutline size={18} /></button>
+                  <button onClick={() => deleteItem('scheme', item._id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }} aria-label="Delete this scheme search"><MdDeleteOutline size={18} /></button>
                 </div>
               </div>
               <div style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: 8 }}>
@@ -151,7 +154,7 @@ export default function History() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ color: 'var(--gray-500)', fontSize: '0.8rem' }}>{formatDate(item.createdAt)}</span>
-                  <button onClick={() => deleteItem('complaint', item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }} aria-label="Delete this complaint"><MdDeleteOutline size={18} /></button>
+                  <button onClick={() => deleteItem('complaint', item._id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red)' }} aria-label="Delete this complaint"><MdDeleteOutline size={18} /></button>
                 </div>
               </div>
               <div style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: 8 }}>📍 {item.location} · 👤 {item.name}</div>
