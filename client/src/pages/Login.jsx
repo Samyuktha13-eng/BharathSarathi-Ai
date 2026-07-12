@@ -23,7 +23,7 @@ export default function Login() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       login(data.user)
-      navigate('/')
+      navigate('/dashboard')
     } catch (err) {
       setError(err.message)
     } finally {
