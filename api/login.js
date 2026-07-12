@@ -1,6 +1,13 @@
 import { connectDB } from "../lib/mongoose.js";
 import { User } from "../lib/models.js";
 import bcrypt from "bcryptjs";
+import { timingSafeEqual, createHash } from "crypto";
+
+const safeEqual = (a, b) => {
+  const ha = createHash('sha256').update(a).digest();
+  const hb = createHash('sha256').update(b).digest();
+  return timingSafeEqual(ha, hb);
+};
 
 export default async function handler(req, res) {
   if (req.method !== "POST")
@@ -19,7 +26,7 @@ export default async function handler(req, res) {
     const isHashed = user.password.startsWith('$2');
     const match = isHashed
       ? await bcrypt.compare(password, user.password)
-      : user.password === password;
+      : safeEqual(user.password, password);
 
     // If plain text matched, upgrade to bcrypt silently
     if (!isHashed && match) {
