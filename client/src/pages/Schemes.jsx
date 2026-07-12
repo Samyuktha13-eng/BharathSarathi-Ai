@@ -3,9 +3,12 @@ import Spinner from '../components/Spinner'
 import LangSelector from '../components/LangSelector'
 import { HiOutlineDocumentText } from 'react-icons/hi'
 
+import { useAuth } from '../context/AuthContext'
+
 const STATES = ['Andhra Pradesh','Assam','Bihar','Delhi','Gujarat','Haryana','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Odisha','Punjab','Rajasthan','Tamil Nadu','Telangana','Uttar Pradesh','West Bengal','Other']
 
 export default function Schemes() {
+  const { user } = useAuth()
   const [form, setForm] = useState({ age: '', income: '', occupation: '', state: '', gender: '' })
   const [lang, setLang] = useState('en')
   const [result, setResult] = useState('')
@@ -22,7 +25,7 @@ export default function Schemes() {
       const res = await fetch('/api/schemes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, lang }),
+        body: JSON.stringify({ ...form, lang, userId: user?.id }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)

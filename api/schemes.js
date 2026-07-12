@@ -17,9 +17,11 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: "Too many requests. Please wait a minute." });
   }
 
-  const { age, income, occupation, state, gender, lang = "en" } = req.body;
+  const { age, income, occupation, state, gender, lang = "en", userId } = req.body;
   if (!age || !income || !occupation || !state)
     return res.status(400).json({ error: "age, income, occupation, state are required" });
+  if (!userId)
+    return res.status(400).json({ error: "userId is required" });
 
   const ageNum = Number(age);
   if (isNaN(ageNum) || ageNum < 1 || ageNum > 120)
@@ -37,7 +39,7 @@ export default async function handler(req, res) {
   try {
     const schemes = await askAI(schemePrompt({ age, income: sanitizedIncome, occupation: sanitizedOccupation, state: sanitizedState, gender, lang }));
     await connectDB();
-    await Scheme.create({ id: generateComplaintId(), age, income: sanitizedIncome, occupation: sanitizedOccupation, state: sanitizedState, gender: gender || "Not specified", lang, schemes, createdAt: currentTimestamp() });
+    await Scheme.create({ id: generateComplaintId(), userId, age, income: sanitizedIncome, occupation: sanitizedOccupation, state: sanitizedState, gender: gender || "Not specified", lang, schemes, createdAt: currentTimestamp() });
     res.json({ schemes });
   } catch (err) {
     console.error("Schemes error:", err.message);

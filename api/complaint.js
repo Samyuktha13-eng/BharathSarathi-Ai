@@ -17,9 +17,11 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: "Too many requests. Please wait a minute." });
   }
 
-  const { name, description, location, lang = "en" } = req.body;
+  const { name, description, location, lang = "en", userId } = req.body;
   if (!description || !location)
     return res.status(400).json({ error: "description and location are required" });
+  if (!userId)
+    return res.status(400).json({ error: "userId is required" });
 
   let sanitizedDesc, sanitizedLoc;
   try {
@@ -33,7 +35,7 @@ export default async function handler(req, res) {
     const formalComplaint = await askAI(complaintPrompt(sanitizedDesc, sanitizedLoc, lang));
     const id = generateComplaintId();
     await connectDB();
-    await Complaint.create({ id, name: name || "Anonymous", location: sanitizedLoc, description: sanitizedDesc, formalComplaint, status: "Submitted", lang, createdAt: currentTimestamp() });
+    await Complaint.create({ id, userId, name: name || "Anonymous", location: sanitizedLoc, description: sanitizedDesc, formalComplaint, status: "Submitted", lang, createdAt: currentTimestamp() });
     res.json({ complaintId: id, formalComplaint, status: "Submitted" });
   } catch (err) {
     console.error("Complaint error:", err.message);

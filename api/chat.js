@@ -17,9 +17,11 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: "Too many requests. Please wait a minute." });
   }
 
-  const { question, lang = "en" } = req.body;
+  const { question, lang = "en", userId } = req.body;
   if (!question || typeof question !== "string" || question.trim().length === 0)
     return res.status(400).json({ error: "question is required" });
+  if (!userId)
+    return res.status(400).json({ error: "userId is required" });
 
   if (question.length > 1000)
     return res.status(400).json({ error: "Question too long (max 1000 characters)" });
@@ -34,7 +36,7 @@ export default async function handler(req, res) {
   try {
     const answer = await askAI(assistantPrompt(sanitized, lang));
     await connectDB();
-    await Chat.create({ id: generateComplaintId(), question: sanitized, answer, lang, createdAt: currentTimestamp() });
+    await Chat.create({ id: generateComplaintId(), userId, question: sanitized, answer, lang, createdAt: currentTimestamp() });
     res.json({ answer });
   } catch (err) {
     console.error("Chat error:", err.message);

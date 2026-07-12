@@ -20,7 +20,10 @@ const newSession = () => ({
   createdAt: new Date().toISOString(),
 })
 
+import { useAuth } from '../context/AuthContext'
+
 export default function Assistant() {
+  const { user } = useAuth()
   const [sessions, setSessions] = useState(() => {
     const s = loadSessions()
     return s.length ? s : [newSession()]
@@ -93,7 +96,7 @@ export default function Assistant() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, lang }),
+        body: JSON.stringify({ question, lang, userId: user?.id }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)

@@ -3,10 +3,13 @@ import Spinner from '../components/Spinner'
 import { formatDate } from '../utils'
 import { MdHistory, MdDeleteOutline, MdDeleteSweep } from 'react-icons/md'
 
+import { useAuth } from '../context/AuthContext'
+
 const TABS = ['Chat', 'Schemes', 'Complaints']
 const LANG_LABELS = { en: 'English', hi: 'Hindi', ta: 'Tamil', te: 'Telugu', bn: 'Bengali', mr: 'Marathi', gu: 'Gujarati', kn: 'Kannada' }
 
 export default function History() {
+  const { user } = useAuth()
   const [tab, setTab] = useState('Chat')
   const [data, setData] = useState(null)
   const [search, setSearch] = useState('')
@@ -14,7 +17,7 @@ export default function History() {
 
   const load = async () => {
     setLoading(true)
-    const res = await fetch('/api/history')
+    const res = await fetch(`/api/history?userId=${user?.id}`)
     const json = await res.json()
     setData(json)
     setLoading(false)
@@ -23,13 +26,13 @@ export default function History() {
   useEffect(() => { load() }, [])
 
   const deleteItem = async (type, id) => {
-    await fetch('/api/history', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, id }) })
+    await fetch('/api/history', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, id, userId: user?.id }) })
     load()
   }
 
   const clearAll = async (type) => {
     if (!confirm(`Clear all ${type} history?`)) return
-    await fetch('/api/history', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type }) })
+    await fetch('/api/history', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, userId: user?.id }) })
     load()
   }
 

@@ -5,6 +5,8 @@ import { useVoice } from '../hooks/useVoice'
 import { MdOutlineReportProblem } from 'react-icons/md'
 import { BsMicFill, BsStopFill } from 'react-icons/bs'
 
+import { useAuth } from '../context/AuthContext'
+
 const STATUSES = ['Submitted', 'In Review', 'Resolved']
 const STATUS_INFO = {
   'Submitted':  { badge: 'badge-blue',   icon: '📥', desc: 'Your complaint has been received.' },
@@ -13,6 +15,7 @@ const STATUS_INFO = {
 }
 
 export default function Complaint() {
+  const { user } = useAuth()
   const [form, setForm] = useState({ name: '', location: '', description: '' })
   const [lang, setLang] = useState('en')
   const [result, setResult] = useState(null)
@@ -30,7 +33,7 @@ export default function Complaint() {
       const res = await fetch('/api/complaint', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, lang }),
+        body: JSON.stringify({ ...form, lang, userId: user?.id }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
