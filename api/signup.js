@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       createdAt: currentTimestamp(),
     });
 
-    res.status(201).json({ user: { id: user.id, name: user.name, email: user.email, lang: user.lang } });
+    res.status(201).json({ user: { id: user._id.toString(), name: user.name, email: user.email, lang: user.lang } });
   } catch (err) {
     console.error("Signup error:", err.message);
     res.status(500).json({ error: err.message });

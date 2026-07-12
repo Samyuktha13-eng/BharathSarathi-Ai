@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     }
 
     if (!match) return res.status(401).json({ error: "Invalid email or password." });
-    res.json({ user: { id: user.id, name: user.name, email: user.email, lang: user.lang } });
+    res.json({ user: { id: user._id.toString(), name: user.name, email: user.email, lang: user.lang } });
   } catch (err) {
     console.error("Login error:", err.message);
     res.status(500).json({ error: "Unable to connect. Please try again." });
