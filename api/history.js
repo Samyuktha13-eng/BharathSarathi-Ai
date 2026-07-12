@@ -1,6 +1,8 @@
 import { connectDB } from "../lib/mongoose.js";
 import { Chat, Scheme, Complaint } from "../lib/models.js";
 
+export const config = { api: { bodyParser: true } };
+
 export default async function handler(req, res) {
   await connectDB();
 
@@ -31,7 +33,7 @@ export default async function handler(req, res) {
   }
 
   if (req.method === "DELETE") {
-    const { type, id } = req.body;
+    const { type, id } = req.body || {};
     if (id) {
       if (type === "chat") await Chat.deleteOne({ id, userId });
       if (type === "scheme") await Scheme.deleteOne({ id, userId });
