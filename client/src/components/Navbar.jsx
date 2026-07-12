@@ -46,7 +46,10 @@ export default function Navbar() {
             <button className="btn-logout" onClick={handleLogout} aria-label="Logout">Logout</button>
           </>
         ) : (
-          <button className="btn-logout" onClick={() => navigate('/login')}>Sign In</button>
+          <>
+            <button className="btn-logout" onClick={() => navigate('/login')}>Sign In</button>
+            <button className="btn btn-primary" style={{ padding: '7px 18px', fontSize: '0.85rem' }} onClick={() => navigate('/signup')}>Sign Up</button>
+          </>
         )}
       </div>
     </nav>
