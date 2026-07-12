@@ -6,12 +6,12 @@ import { BsMicFill, BsStopFill } from 'react-icons/bs'
 import { MdAdd, MdHistory, MdSearch, MdClose } from 'react-icons/md'
 
 const MSG_LIMIT = 20
-const STORAGE_KEY = 'sarthi_sessions'
 
-const loadSessions = () => {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [] } catch { return [] }
+const storageKey = (userId) => `sarthi_sessions_${userId}`
+const loadSessions = (userId) => {
+  try { return JSON.parse(localStorage.getItem(storageKey(userId))) || [] } catch { return [] }
 }
-const saveSessions = (sessions) => localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions))
+const saveSessions = (userId, sessions) => localStorage.setItem(storageKey(userId), JSON.stringify(sessions))
 
 const newSession = () => ({
   id: Date.now().toString(),
@@ -25,11 +25,11 @@ import { useAuth } from '../context/AuthContext'
 export default function Assistant() {
   const { user } = useAuth()
   const [sessions, setSessions] = useState(() => {
-    const s = loadSessions()
+    const s = loadSessions(user?.id)
     return s.length ? s : [newSession()]
   })
   const [activeId, setActiveId] = useState(() => {
-    const s = loadSessions()
+    const s = loadSessions(user?.id)
     return s.length ? s[0].id : null
   })
   const [input, setInput] = useState('')
@@ -46,7 +46,7 @@ export default function Assistant() {
 
   useEffect(() => {
     if (sessions.length) {
-      saveSessions(sessions)
+      saveSessions(user?.id, sessions)
       if (!activeId) setActiveId(sessions[0].id)
     }
   }, [sessions])
