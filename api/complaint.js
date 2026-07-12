@@ -5,6 +5,7 @@ import { Complaint } from "../lib/models.js";
 import { generateComplaintId, currentTimestamp } from "../lib/utils.js";
 import { checkRateLimit } from "../lib/rateLimiter.js";
 import { sanitizeInput } from "../lib/sanitize.js";
+import { detectInputLanguage } from "../lib/detectLang.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST")
@@ -32,7 +33,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const formalComplaint = await askAI(complaintPrompt(lang), `Issue Description: ${sanitizedDesc}\nLocation: ${sanitizedLoc}`);
+    const detectedLang = detectInputLanguage(sanitizedDesc);
+    const formalComplaint = await askAI(complaintPrompt(lang, detectedLang), `Issue Description: ${sanitizedDesc}\nLocation: ${sanitizedLoc}`);
     const id = generateComplaintId();
     await connectDB();
     await Complaint.create({ id, userId, name: name || "Anonymous", location: sanitizedLoc, description: sanitizedDesc, formalComplaint, status: "Submitted", lang, createdAt: currentTimestamp() });

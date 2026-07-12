@@ -5,6 +5,7 @@ import { Chat } from "../lib/models.js";
 import { generateComplaintId, currentTimestamp } from "../lib/utils.js";
 import { checkRateLimit } from "../lib/rateLimiter.js";
 import { sanitizeInput } from "../lib/sanitize.js";
+import { detectInputLanguage } from "../lib/detectLang.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST")
@@ -34,7 +35,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const answer = await askAI(assistantPrompt(lang), sanitized);
+    const detectedLang = detectInputLanguage(sanitized);
+    const answer = await askAI(assistantPrompt(lang, detectedLang), sanitized);
     await connectDB();
     await Chat.create({ id: generateComplaintId(), userId, question: sanitized, answer, lang, createdAt: currentTimestamp() });
     res.json({ answer });
