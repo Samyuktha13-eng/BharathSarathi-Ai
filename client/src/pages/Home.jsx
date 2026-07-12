@@ -20,7 +20,7 @@ export default function Home() {
   const [stats, setStats] = useState({ totalChats: 0, totalSchemes: 0, totalComplaints: 0 })
 
   useEffect(() => {
-    fetch('/api/history').then((r) => r.json()).then((d) => setStats(d.stats)).catch(() => {})
+    fetch('/api/history').then((r) => r.json()).then((d) => setStats(d.stats ?? { totalChats: 0, totalSchemes: 0, totalComplaints: 0 })).catch(() => {})
   }, [])
 
   return (
