@@ -34,7 +34,10 @@ export default function Assistant() {
       if (!res.ok) throw new Error(data.error)
       setMessages((m) => [...m, { role: 'ai', text: data.answer }])
     } catch (err) {
-      setMessages((m) => [...m, { role: 'ai', text: `❌ Error: ${err.message}` }])
+      const msg = err.message === 'Invalid input detected'
+        ? "I'm here to help with government services, civic issues, and public schemes. I can't assist with that request."
+        : "Something went wrong. Please try again."
+      setMessages((m) => [...m, { role: 'ai', text: msg }])
     } finally {
       setLoading(false)
     }
