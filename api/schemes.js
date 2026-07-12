@@ -37,7 +37,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const schemes = await askAI(schemePrompt({ age, income: sanitizedIncome, occupation: sanitizedOccupation, state: sanitizedState, gender, lang }));
+    const schemes = await askAI(schemePrompt({ lang: details.lang }), `Age: ${age}\nIncome: ${sanitizedIncome}\nOccupation: ${sanitizedOccupation}\nState: ${sanitizedState}\nGender: ${gender || 'Not specified'}`);
     await connectDB();
     await Scheme.create({ id: generateComplaintId(), userId, age, income: sanitizedIncome, occupation: sanitizedOccupation, state: sanitizedState, gender: gender || "Not specified", lang, schemes, createdAt: currentTimestamp() });
     res.json({ schemes });

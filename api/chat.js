@@ -34,7 +34,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const answer = await askAI(assistantPrompt(sanitized, lang));
+    const answer = await askAI(assistantPrompt(lang), sanitized);
     await connectDB();
     await Chat.create({ id: generateComplaintId(), userId, question: sanitized, answer, lang, createdAt: currentTimestamp() });
     res.json({ answer });

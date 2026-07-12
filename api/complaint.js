@@ -32,7 +32,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const formalComplaint = await askAI(complaintPrompt(sanitizedDesc, sanitizedLoc, lang));
+    const formalComplaint = await askAI(complaintPrompt(lang), `Issue Description: ${sanitizedDesc}\nLocation: ${sanitizedLoc}`);
     const id = generateComplaintId();
     await connectDB();
     await Complaint.create({ id, userId, name: name || "Anonymous", location: sanitizedLoc, description: sanitizedDesc, formalComplaint, status: "Submitted", lang, createdAt: currentTimestamp() });
