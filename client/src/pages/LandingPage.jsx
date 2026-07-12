@@ -153,25 +153,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ── Security ── */}
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>🔒 Secure & Responsible AI</h2>
-          <div className="card" style={{ background: 'linear-gradient(135deg, #f0fdf4, #eff6ff)', border: '1.5px solid rgba(22,163,74,0.2)' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              {[
-                '✅ AI guardrails for civic-only responses',
-                '✅ Input validation & sanitization',
-                '✅ Rate limiting (20 req/min per IP)',
-                '✅ Prompt injection protection',
-                '✅ Privacy-focused design',
-                '✅ Transparent AI assistance',
-              ].map((item) => (
-                <div key={item} style={{ fontSize: '0.88rem', color: '#334155', fontWeight: 500 }}>{item}</div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── Who Can Use ── */}
         <section style={styles.section}>
           <h2 style={styles.sectionTitle}>👥 Who Can Use It?</h2>
